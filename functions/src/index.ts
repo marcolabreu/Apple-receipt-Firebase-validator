@@ -1,4 +1,4 @@
-import { https } from "firebase-functions";
+import { RuntimeOptions, runWith } from "firebase-functions";
 import bent = require("bent");
 
 const sendToApple = async (data: string) => {
@@ -24,15 +24,22 @@ const sendToApple = async (data: string) => {
   }
 };
 
-export const validateReceipt = https.onRequest(async (req, res) => {
-  const appleResponse = await sendToApple(req.body);
+const runtimeOpts: RuntimeOptions = {
+  timeoutSeconds: 5,
+  memory: "128MB",
+};
 
-  if (appleResponse.status === 0) {
-    console.info(
-      `Receipt for app ${appleResponse.receipt.bundle_id} decrypted by Apple ${appleResponse.environment} server.`
-    );
+export const validateReceipt = runWith(runtimeOpts).https.onRequest(
+  async (req, res) => {
+    const appleResponse = await sendToApple(req.body);
+
+    if (appleResponse.status === 0) {
+      console.info(
+        `Receipt for app ${appleResponse.receipt.bundle_id} decrypted by Apple ${appleResponse.environment} server.`
+      );
+    }
+
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(appleResponse));
   }
-
-  res.header("Content-Type", "application/json");
-  res.send(JSON.stringify(appleResponse));
-});
+);
