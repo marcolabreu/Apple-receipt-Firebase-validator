@@ -9,6 +9,11 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "engines": {
     "node": "10"
   },
@@ -25,7 +30,10 @@
     "eslint": "^7.2.0",
     "eslint-plugin-import": "^2.21.2",
     "firebase-functions-test": "^0.2.0",
+    "husky": "^4.2.5",
     "mocha": "^7.2.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
     "typescript": "^3.9.5"
   },
   "private": true
