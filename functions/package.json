@@ -21,7 +21,7 @@
   "dependencies": {
     "@types/bent": "^7.3.1",
     "bent": "^7.3.12",
-    "firebase-admin": "^9.2.0",
+    "firebase-admin": "^11.4.1",
     "firebase-functions": "^3.11.0"
   },
   "devDependencies": {
